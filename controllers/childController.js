@@ -1,17 +1,53 @@
-exports.getAllChildern = (req,res,next)=>{
-    res.json({data:'All children Data'})
-}
+const childModel = require('../models/childModel')
+exports.getAllChildern = async (req,res,next)=>{
+    try {
+        console.log(res.cookie.jwt);
+        const children = await childModel.find()
+        res.status(200).json({children})
+    } catch (err) {
+        next(err)
+    }}
 
-exports.addNewChild = (req,res,next)=>{
-    res.json({data:'New Child Added Successfully'})
-}
-exports.updatechild = (req,res,next)=>{
-    res.json({data:'Child Data Updated Successfully'})
+exports.addNewChild = async (req,res,next)=>{
+    try{
+        const user = await childModel.create(req.body)
+        res.status(201).json({user})
+    }catch(err){
+        next(err)
+    }}
+exports.updatechild = async (req,res,next)=>{
+        try {
+            const id = req.body._id
+            const data = req.body       
+            const newData = await childModel.findByIdAndUpdate({_id:id},data,{new:true})
+            res.status(200).json({newData})
+        } catch (err) {
+            next(err)
+        }
 }
 exports.deleteChild = (req,res,next)=>{
-    res.json({data:'Child deleted Successfully'})
-}
+    try {
+        const id = req.params.id;
+        childModel.findByIdAndDelete(id).then((data) => {
+            res.status(200).json({ data });
+        }).catch((error) => {
+            next(error)
+        });
+    }
+    catch (error) {
+        next(error)
+    }}
 
 exports.getChildById = (req,res,next)=>{
-    res.json({data:'Get Child By Id Successfully'})
+    try {
+        const id = req.params.id;
+        childModel.findOne({_id:id}).then((data) => {
+            res.status(200).json({ data });
+        }).catch((error) => {
+            next(error)
+        });
+    }
+    catch (error) {
+        next(error)
+    }
 }
