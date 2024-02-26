@@ -12,7 +12,6 @@ const teacherRoute = require('./routes/teacherRoute')
 const classRoute = require('./routes/classRoute')
 const childRoute = require('./routes/childRoute')
 const authRoute = require('./routes/authRoute') 
-
 const server = express()
 const port = process.env.PORT || 8080
 
@@ -39,6 +38,7 @@ server.use(authRoute)
 server.use(teacherRoute)
 server.use(childRoute)
 server.use(classRoute)
+
 
 server.use((request, response, next) => {
     response.status(404).json({message:"Not Found"})

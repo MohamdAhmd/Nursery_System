@@ -1,4 +1,5 @@
 const teacherModel = require('../models/teacherModel')
+const adminModel = require('../models/adminModel')
 const bcrypt = require('bcrypt')
 const JWT = require('jsonwebtoken')
 
@@ -14,14 +15,24 @@ const createToken = (id)=>{ // here i create a token which contains paylod, secr
 
 async function login(email,password) {
     const user = await teacherModel.findOne({email})
-    if(user){ 
+    if(user){
         const auth = await bcrypt.compare(password,user.password)
         if(auth){
             return user
         }
         throw Error('Incorrect Password')
     }
-    throw Error('Incorrect Email')
+    else{
+        const user = await adminModel.findOne({email})
+        if(user){
+            const auth = await bcrypt.compare(password,user.password)
+            if(auth){
+                return user
+            }
+            throw Error('Incorrect Password')
+        }
+        throw Error('Incorrect Email')
+    }
 }
 
 exports.post_signup = async (req,res,next)=>{

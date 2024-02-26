@@ -9,10 +9,38 @@
   "basePath": "/",
   "schemes": [
     "http"
-  ],
+],
+"securityDefinitions": {
+    "BearerAuth": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+    }
+},
+"tags": [
+    {
+        "name": "Authentication",
+        "description": "Operations related to authentication"
+    },
+    {
+        "name": "Teachers",
+        "description": "Operations related to teachers"
+    },
+    {
+        "name": "Children",
+        "description": "Operations related to children"
+    },
+    {
+        "name": "Classes",
+        "description": "Operations related to classes"
+    }
+],
   "paths": {
     "/login": {
       "post": {
+        "tags": [
+          "Authentication"
+      ],
         "description": "",
         "parameters": [
           {
@@ -40,6 +68,9 @@
     },
     "/signup": {
       "post": {
+        "tags": [
+          "Authentication"
+      ],
         "description": "",
         "parameters": [
           {
@@ -70,6 +101,9 @@
     },
     "/changePass": {
       "post": {
+        "tags": [
+          "Authentication"
+      ],
         "description": "",
         "parameters": [
           {
@@ -97,6 +131,9 @@
     },
     "/child": {
       "get": {
+        "tags": [
+          "Children"
+      ],
         "description": "",
         "parameters": [
           {
@@ -112,6 +149,9 @@
         }
       },
       "post": {
+        "tags": [
+          "Authentication"
+      ],
         "description": "",
         "parameters": [
           {
@@ -127,6 +167,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Authentication"
+      ],
         "description": "",
         "parameters": [
           {
@@ -145,21 +188,6 @@
                 }
               }
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
           }
         ],
         "responses": {
@@ -172,106 +200,9 @@
     "/child/{id}": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/class": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "supervisor": {
-                  "example": "any"
-                },
-                "children": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        }
-      },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "_id": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/class/{id}": {
-      "get": {
-        "description": "",
+        "tags": [
+          "Children"
+      ],
         "parameters": [
           {
             "name": "id",
@@ -292,52 +223,9 @@
         }
       },
       "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/class/child/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/class/teacher/{id}": {
-      "get": {
+        "tags": [
+          "Children"
+      ],
         "description": "",
         "parameters": [
           {
@@ -361,16 +249,46 @@
     },
     "/teachers": {
       "get": {
+        "tags": [
+          "Teachers"
+      ],
         "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Success",
+            "schema": {
+                "type": "array",
+                "items": {
+                    "$ref": ""
+                }
+            }
+          },
+          "401": {
+              "description": "Unauthorized"
+          },
+          "500": {
+              "description": "Internal Server Error"
           }
         }
       },
       "post": {
+        "tags": [
+          "Teachers"
+      ],
         "description": "",
         "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
@@ -378,13 +296,13 @@
               "type": "object",
               "properties": {
                 "fullname": {
-                  "example": "any"
+                  "example": "swaggerUser"
                 },
                 "email": {
-                  "example": "any"
+                  "example": "swaggerUser@gmail.com"
                 },
                 "password": {
-                  "example": "any"
+                  "example": "123!@12345aj"
                 }
               }
             }
@@ -397,6 +315,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Teachers"
+      ],
         "description": "",
         "parameters": [
           {
@@ -406,7 +327,9 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "example": "any"
+                  "example": "65db83447073605500eb527c"
+                  },"fullname":{
+                  "example": "hamada_Teacher"
                 }
               }
             }
@@ -421,17 +344,44 @@
     },
     "/teachers/supervisors": {
       "get": {
+        "tags": [
+          "Teachers"
+      ],
         "description": "",
+        "security": [
+          {
+              "BearerAuth": []
+          }
+      ],
         "responses": {
           "200": {
-            "description": "OK"
-          }
+            "description": "Success",
+            "schema": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/definitions/Teachers"
+                }
+            }
+        },
+        "401": {
+            "description": "Unauthorized"
+        },
+        "500": {
+            "description": "Internal Server Error"
+        }
         }
       }
     },
     "/teachers/{id}": {
       "get": {
+        "tags": [
+          "Teachers"
+      ],
         "description": "",
+        "security": [
+          {
+              "BearerAuth": []
+          }],
         "parameters": [
           {
             "name": "id",
@@ -447,12 +397,25 @@
         }
       },
       "delete": {
+        "tags": [
+          "Teachers"
+      ],
         "description": "",
+        "security": [
+          {
+              "BearerAuth": []
+          }
+      ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
             "type": "string"
           }
         ],
@@ -462,6 +425,203 @@
           }
         }
       }
+    },
+    "/class": {
+      "get": {
+          "tags": [
+              "Class"
+          ],
+          "summary": "Get all classes",
+          "description": "Retrieve a list of all classes",
+          "security": [
+              {
+                  "BearerAuth": []
+              }
+          ],
+          "responses": {
+              "200": {
+                  "description": "Success",
+                  "schema": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/definitions/Class"
+                      }
+                  }
+              },
+              "401": {
+                  "description": "Unauthorized"
+              },
+              "500": {
+                  "description": "Internal Server Error"
+              }
+          }
+      },
+      "post": {
+          "tags": [
+              "Class"
+          ],
+          "description": "Add new class",
+          "security": [
+              {
+                  "BearerAuth": []
+              }
+          ],
+          "parameters": [
+              {
+                  "name": "body",
+                  "in": "body",
+                  "description": "Teacher data",
+                  "type": "object",
+                  "required": true,
+                  "example": {
+                      "name": "Class Name",
+                      "Supervisor": "65db83527073605500eb5282",
+                      "ChildrenInClass": [
+                          "1",
+                          "2"
+                      ]
+                  }
+              }
+          ],
+          "responses": {
+              "200": {
+                  "description": "Created"
+              }
+          }
+      },
+      "put": {
+          "tags": [
+              "Class"
+          ],
+          "summary": "Update Class data",
+          "security": [
+              {
+                  "BearerAuth": []
+              }
+          ],
+          "parameters": [
+              {
+                  "name": "body",
+                  "in": "body",
+                  "description": "Teacher data",
+                  "type": "object",
+                  "required": true,
+                  "example": {
+                      "_id":3,
+                      "name": "class_Name_Updated"
+                  }
+              }
+          ],
+          "responses": {
+              "200": {
+                  "description": "Updated"
+              }
+          }
+      }
+    },
+    "/class/{id}": {
+        "get": {
+            "tags": [
+                "Class"
+            ],
+            "summary": "Get class by id",
+            "security": [
+                {
+                    "BearerAuth": []
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK"
+                }
+            }
+        },
+        "delete": {
+            "tags": [
+                "Class"
+            ],
+            "summary": "Delete class",
+            "security": [
+                {
+                    "BearerAuth": []
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "deleted"
+                }
+            }
+        }
+    },
+    "/class/child/{id}": {
+        "get": {
+            "tags": [
+                "Class",
+                "Children"
+            ],
+            "summary": "Get All children in a class",
+            "security": [
+                {
+                    "BearerAuth": []
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK"
+                }
+            }
+        }
+    },
+    "/class/teacher/{id}": {
+        "get": {
+            "tags": [
+                "Class",
+                "Teachers"
+            ],
+            "summary": "Get a class supervisor",
+            "security": [
+                {
+                    "BearerAuth": []
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK"
+                }
+            }
+        }
     }
   }
 }

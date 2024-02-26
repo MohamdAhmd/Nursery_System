@@ -9,10 +9,10 @@ router.route('/child')
         .get(isAuth,isAdmin,childController.getAllChildern)
         .post(isAuth,isAdmin,dataValidation,validator,childController.addNewChild)
         .put(isAuth,isAdmin,updateValidation,validator,childController.updatechild)
-        .delete(isAuth,isAdmin,childController.deleteChild)
-
+        
 router.route('/child/:id')
         .get(isAuth,isAdmin,paramValidation,validator,childController.getChildById)
+        .delete(isAuth,isAdmin,childController.deleteChild)
 
 module.exports = router;
 
