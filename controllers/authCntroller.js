@@ -5,8 +5,8 @@ const JWT = require('jsonwebtoken')
 
 
 const maxAge = 1 * 24 * 24 * 60 
-const createToken = (id)=>{ // here i create a token which contains paylod, secret, and signture
-    const role = 'teacher'
+const createToken = (id,userType)=>{ // here i create a token which contains paylod, secret, and signture
+    const role = userType 
     return JWT.sign({id, role},process.env.JWT_SECRET,{
         expiresIn: maxAge
         // this jwt will expire in one day
@@ -18,6 +18,7 @@ async function login(email,password) {
     if(user){
         const auth = await bcrypt.compare(password,user.password)
         if(auth){
+            user.role = 'teacher'
             return user
         }
         throw Error('Incorrect Password')
@@ -27,6 +28,7 @@ async function login(email,password) {
         if(user){
             const auth = await bcrypt.compare(password,user.password)
             if(auth){
+                user.role = 'admin'
                 return user
             }
             throw Error('Incorrect Password')
@@ -57,7 +59,7 @@ exports.post_login = async (req,res,next)=>{
     try {
         const user = await login(email,password)
         // here i created token for every one user signup
-        const token = createToken(user._id) 
+        const token = createToken(user._id,user.role) 
         res.status(201).json({user:user._id, token:token})
     } catch (err) {
         next(err);

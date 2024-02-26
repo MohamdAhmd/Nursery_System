@@ -12,7 +12,7 @@ exports.validateLogin = [
 ]
 
 exports.validateSignup = [
-    body("fullname").trim().not().isEmpty().isAlpha().withMessage("Name should be a alphptic"),
+    body("fullname").trim().not().isEmpty().withMessage("User Name is Required"),
     body("email")
     .notEmpty()
     .withMessage("email required")

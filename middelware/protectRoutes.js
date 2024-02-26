@@ -1,5 +1,4 @@
 const JWT=require("jsonwebtoken");
-
 exports.isAuth = (req, res, next) => {
     try {
         // Check if Authorization header exists
@@ -9,6 +8,7 @@ exports.isAuth = (req, res, next) => {
         let token = req.headers['authorization'].split(" ")[1];
         let decodedToken = JWT.verify(token, process.env.JWT_SECRET);
         req.token = decodedToken;
+        console.log(decodedToken);
         next();
     } catch (error) {
         // Modify error object and pass it to next middleware
