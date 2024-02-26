@@ -15,7 +15,10 @@ const teacherSchema = mongoose.Schema({
         required: true,
         minlength:[8,'Minimum Password Length Is 6 characters']
     },
-    image: { type: String }
+    image: { 
+        type: String,
+        default:'no Image'
+    }
 })
 
 teacherSchema.pre('save', async function(next) {

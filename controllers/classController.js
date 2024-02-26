@@ -60,7 +60,7 @@ exports.getAllClassChildernById = async (req,res,next)=>{
         const result = await classModel.findById(classId).populate('children');
         res.status(200).json(result.children)
     } catch (error) {
-        next(err)
+        next(error)
     }
 }
 

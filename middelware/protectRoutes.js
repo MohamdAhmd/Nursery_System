@@ -18,38 +18,13 @@ exports.isAuth = (req, res, next) => {
     }
 }
 
-
-
 exports.isAdmin=(req,res,next)=>{
-    if(req.token.role=="admin")
-    next()
-    else
-    {
+    if(req.token.role=="teacher"){
         let error=new Error("not authorized");
         error.status=403;
         next(error);
     }
-}
-
-exports.isChild=(req,res,next)=>{
-    if(req.token.role=="child")
-    next()
-    else
-    {
-        let error=new Error("not authorized");
-        error.status=403;
-        next(error);
-    }
-}
-
-
-exports.isTeacher=(req,res,next)=>{
-    if(req.token.role=="teacher")
-    next()
-    else
-    {
-        let error=new Error("not authorized");
-        error.status=403;
-        next(error);
+    else{
+        next()
     }
 }

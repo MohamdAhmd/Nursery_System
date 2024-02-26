@@ -12,8 +12,15 @@ exports.getAllTeachers = async (req,res,next)=>{
 
 exports.addNewTeacher =async (req,res,next)=>{
     try{
+        const imgPath = req.file.path
         const {fullname,email,password} = req.body
-        const user = await teacherModel.create({fullname,email,password})
+        let _email = email.toLowerCase();
+        const user = await teacherModel.create({
+            fullname,
+            email:_email,
+            password,
+            image:imgPath
+        })
         res.status(201).json({user})
     }catch(err){
         next(err)

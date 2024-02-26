@@ -1,16 +1,19 @@
 const express = require('express');
 const teachersController = require('../controllers/teacherController')
-const {isAuth} = require('../middelware/protectRoutes')
+const {isAuth,isAdmin} = require('../middelware/protectRoutes')
+const {dataValidation ,updateValidation, paramValidation} = require('../middelware/validation/teacherValidation')
+const validator = require('../middelware/validation/validator')
+const { addImage } = require('../middelware/addImage')
 const router = express.Router();
 
 router.route('/teachers')
-        .get(teachersController.getAllTeachers)
-        .post(teachersController.addNewTeacher)
-        .put(teachersController.updateTeacher)
+        .get(isAuth,isAdmin,teachersController.getAllTeachers)
+        .post(isAuth,isAdmin,dataValidation,validator,addImage,teachersController.addNewTeacher)
+        .put(updateValidation,validator,teachersController.updateTeacher)
 
-router.route('/teachers/supervisors').get(teachersController.getAllSupervisors)
+router.route('/teachers/supervisors').get(isAuth,isAdmin,teachersController.getAllSupervisors)
 router.route('/teachers/:id')
-        .get(teachersController.getTeacherByid)
-        .delete(teachersController.deleteTeacher)
+        .get(paramValidation,validator,teachersController.getTeacherByid)
+        .delete(isAuth,isAdmin,paramValidation,validator,teachersController.deleteTeacher)
 
 module.exports = router;

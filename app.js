@@ -3,6 +3,9 @@ const morgan = require('morgan')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
+const path = require('path')
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger-output.json");
 
 
 const teacherRoute = require('./routes/teacherRoute')
@@ -27,6 +30,9 @@ server.use(morgan('dev'))
 server.use(cors())
 server.use(express.json())
 server.use(express.urlencoded({extended: true}))
+server.use(express.static(path.join(__dirname, 'images')))
+server.use("/api-docs",
+swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 server.use(authRoute)
