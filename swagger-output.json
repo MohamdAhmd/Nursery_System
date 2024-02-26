@@ -50,10 +50,10 @@
               "type": "object",
               "properties": {
                 "email": {
-                  "example": "any"
+                  "example": "mosaber455@gmail.com"
                 },
                 "password": {
-                  "example": "any"
+                  "example": "ankya12233!@#"
                 }
               }
             }
@@ -80,13 +80,13 @@
               "type": "object",
               "properties": {
                 "fullname": {
-                  "example": "any"
+                  "example": "Mohamed"
                 },
                 "email": {
-                  "example": "any"
+                  "example": "mosaber455@gmail.com"
                 },
                 "password": {
-                  "example": "any"
+                  "example": "ankya12233!@#"
                 }
               }
             }

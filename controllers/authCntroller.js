@@ -46,10 +46,6 @@ exports.post_signup = async (req,res,next)=>{
         })
         // here i created token for every one user signup
         const token = createToken(user._id) 
-         // Set the token in the response headers
-         //res.setHeader('Authorization', `Bearer ${token}`);
-        // here i send cookie for frontend
-        // res.cookie('jwt',token,{ httpOnly:true, maxAge:maxAge * 1000}) 
         res.status(201).json({user:user._id,token:token})
     } catch (err) {
         next(err);
@@ -62,11 +58,6 @@ exports.post_login = async (req,res,next)=>{
         const user = await login(email,password)
         // here i created token for every one user signup
         const token = createToken(user._id) 
-         // Set the token in the response headers
-        //  res.setHeader('authorization', `Bearer ${token}`);
-        // // here i send cookie for frontend
-
-        // // res.cookie('jwt',token,{ httpOnly:true, maxAge:maxAge * 1000}) 
         res.status(201).json({user:user._id, token:token})
     } catch (err) {
         next(err);
